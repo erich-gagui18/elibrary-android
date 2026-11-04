@@ -1,0 +1,21 @@
+<resources>
+    <!-- Black and white. Delete res/values-night/themes.xml so dark mode doesn't override this. -->
+    <style name="Theme.ELibrary" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">#000000</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#000000</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#000000</item>
+        <item name="colorOnSecondaryContainer">#FFFFFF</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="colorSurfaceVariant">#EDEDED</item>
+        <item name="colorOnSurfaceVariant">#4D4D4D</item>
+        <item name="colorOutline">#000000</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

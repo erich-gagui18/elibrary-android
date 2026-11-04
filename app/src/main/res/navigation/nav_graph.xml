@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/booksFragment">
+
+    <fragment
+        android:id="@+id/booksFragment"
+        android:name="com.erich.elibrary.ui.BooksFragment" />
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.erich.elibrary.ui.AuthFragment">
+        <argument
+            android:name="mode"
+            android:defaultValue="login"
+            app:argType="string" />
+    </fragment>
+</navigation>
