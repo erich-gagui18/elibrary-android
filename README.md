@@ -13,10 +13,13 @@ Books come from Project Gutenberg (public domain), so every download is legal.
 - Live "downloads left" counter (guest limit 5, member limit 10)
 - The API's own message when the limit is reached (HTTP 429)
 - Black-and-white Material 3 theme with grayscale covers
+- Bottom navigation: Catalog, My Library, Account
+- My Library (members): save books from the catalog, favorite, remove, download; synced with the website
+- Account tab: signed-in user, downloads left, log in / sign up / log out
 
 The app never counts downloads itself. The backend enforces the limits and the app only displays what the API returns.
 
-Not in Phase 1: My Library and favorites on Android (Phase 2), the embedded AI agent (Phase 2 and 3).
+Not yet built: the embedded AI agent (Phase 2 and 3).
 
 ## Tech stack
 
@@ -36,18 +39,21 @@ Not in Phase 1: My Library and favorites on Android (Phase 2), the embedded AI a
 
 ### API address
 
-`ApiClient.BASE_URL` in `app/src/main/java/com/erich/elibrary/ApiClient.kt` is:
+The app reads the API address from `api.base.url` in `local.properties` (this file is not committed). Without it, the emulator address `http://10.0.2.2:8000/api/` is used. `10.0.2.2` is how the Android emulator reaches your PC's localhost. After changing `local.properties`, run **Sync Project with Gradle Files** and run the app again.
 
-```
-http://10.0.2.2:8000/api/
-```
+**Real phone over USB (most reliable)**
 
-`10.0.2.2` is how the Android emulator reaches your PC's localhost.
+1. Turn on USB debugging on the phone and plug it in.
+2. Run `adb reverse tcp:8000 tcp:8000` (`adb` is in the Android SDK `platform-tools` folder).
+3. In `local.properties` add: `api.base.url=http://127.0.0.1:8000/api/`
+4. Start the API with `php artisan serve`.
 
-To use a real phone on the same Wi-Fi:
+**Real phone on the same Wi-Fi**
 
-1. Run the API with `php artisan serve --host=0.0.0.0`.
-2. Change `BASE_URL` to `http://<your PC's LAN IP>:8000/api/`.
+1. Start the API with `php artisan serve --host=0.0.0.0`.
+2. Allow port 8000 through Windows Firewall.
+3. In `local.properties` add: `api.base.url=http://<your PC's LAN IP>:8000/api/`
+4. Check that `http://<your PC's LAN IP>:8000/api/health` opens in the phone's browser.
 
 The manifest allows plain HTTP (`usesCleartextTraffic`) for development. Remove it and switch `BASE_URL` to an `https` address once the API is deployed.
 
@@ -85,12 +91,13 @@ app/src/main/res/       Layouts, navigation graph, theme, drawables
 | Category chips | `GET /categories` |
 | Download | `GET /books/{id}/download` (429 at the limit) |
 | Counter | `GET /downloads/status` |
+| My Library | `GET/POST /library`, `PATCH /library/{bookId}/favorite`, `DELETE /library/{bookId}` |
 
 ## Phase 2 plan
 
-- My Library and favorites on Android, synced with the website
+- ~~My Library and favorites on Android, synced with the website~~ (done)
 - Embedded AI agent chat, connected to the API's agent endpoint
-- Bottom navigation
+- ~~Bottom navigation~~ (done)
 
 ## Author
 
