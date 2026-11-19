@@ -1,7 +1,9 @@
 package com.erich.elibrary
 
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -23,4 +25,10 @@ interface ApiService {
     @GET("categories") suspend fun categories(): List<Category>
     @GET("books/{id}/download") suspend fun download(@Path("id") id: Int): DownloadResponse
     @GET("downloads/status") suspend fun status(): DownloadStatus
+
+    // My Library (members only). The favorite and delete calls take the BOOK id.
+    @GET("library") suspend fun library(): List<LibraryItem>
+    @POST("library") suspend fun saveToLibrary(@Body body: SaveRequest): LibraryItem
+    @PATCH("library/{bookId}/favorite") suspend fun toggleFavorite(@Path("bookId") bookId: Int): LibraryItem
+    @DELETE("library/{bookId}") suspend fun removeFromLibrary(@Path("bookId") bookId: Int): ApiMessage
 }

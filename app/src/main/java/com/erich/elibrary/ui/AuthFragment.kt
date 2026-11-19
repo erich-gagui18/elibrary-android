@@ -45,7 +45,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
                 navOptions { popUpTo(R.id.authFragment) { inclusive = true } },
             )
         }
-        b.guestLink.setOnClickListener { findNavController().popBackStack(R.id.booksFragment, false) }
+        b.guestLink.setOnClickListener { findNavController().popBackStack(R.id.authFragment, true) }
     }
 
     private fun submit(register: Boolean) {
@@ -60,7 +60,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 if (register) Repo.register(name, email, password, confirm) else Repo.login(email, password)
-                findNavController().popBackStack(R.id.booksFragment, false)
+                findNavController().popBackStack(R.id.authFragment, true) // back to the tab the user came from
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {

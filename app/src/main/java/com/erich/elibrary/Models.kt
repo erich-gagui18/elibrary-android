@@ -21,6 +21,16 @@ data class BookPage(
 
 data class Category(val category: String, val total: Int)
 
+// My Library: GET /library returns a list of these, each with its book nested.
+data class LibraryItem(
+    val id: Int,
+    @SerializedName("book_id") val bookId: Int,
+    @SerializedName("is_favorite") val isFavorite: Boolean,
+    val book: Book,
+)
+
+data class SaveRequest(@SerializedName("book_id") val bookId: Int)
+
 data class User(val id: Int, val name: String, val email: String)
 
 data class AuthResponse(val user: User, val token: String)

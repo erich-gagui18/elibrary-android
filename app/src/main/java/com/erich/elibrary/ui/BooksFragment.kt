@@ -33,7 +33,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
     private var _b: FragmentBooksBinding? = null
     private val b get() = _b!!
 
-    private val adapter = BookAdapter { download(it) }
+    private val adapter = BookAdapter(onDownload = { download(it) }, onSave = { save(it) })
     private val items = mutableListOf<Book>()
     private var categories: List<Category> = emptyList()
 
@@ -74,6 +74,7 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch { Repo.user.collect { renderHeader() } }
                 launch { Repo.status.collect { renderHeader() } }
+                launch { Repo.library.collect { items -> adapter.savedIds = items.map { it.bookId }.toSet() } }
             }
         }
 
@@ -195,6 +196,24 @@ class BooksFragment : Fragment(R.layout.fragment_books) {
                 throw e
             } catch (e: Exception) {
                 toast(errorMessage(e)) // e.g. "Guest download limit reached (5). Register to get more."
+            }
+        }
+    }
+
+    private fun save(book: Book) {
+        if (Repo.user.value == null) {
+            toast("Log in to save books to your library.")
+            openAuth("login")
+            return
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                Repo.saveBook(book)
+                toast("Saved “${book.title}”")
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                toast(errorMessage(e))
             }
         }
     }

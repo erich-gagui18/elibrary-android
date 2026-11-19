@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Item ids must match the destination ids in navigation/nav_graph.xml. -->
+    <item
+        android:id="@+id/booksFragment"
+        android:icon="@drawable/ic_tab_catalog"
+        android:title="Catalog" />
+    <item
+        android:id="@+id/libraryFragment"
+        android:icon="@drawable/ic_tab_library"
+        android:title="My Library" />
+    <item
+        android:id="@+id/accountFragment"
+        android:icon="@drawable/ic_tab_account"
+        android:title="Account" />
+</menu>

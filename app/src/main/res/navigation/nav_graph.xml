@@ -9,6 +9,14 @@
         android:name="com.erich.elibrary.ui.BooksFragment" />
 
     <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.erich.elibrary.ui.LibraryFragment" />
+
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.erich.elibrary.ui.AccountFragment" />
+
+    <fragment
         android:id="@+id/authFragment"
         android:name="com.erich.elibrary.ui.AuthFragment">
         <argument
